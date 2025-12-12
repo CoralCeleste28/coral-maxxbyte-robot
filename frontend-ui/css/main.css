@@ -7,8 +7,9 @@ header
     height: 10vh;
 
     padding: 5px 15px;
-    border-bottom: solid 1px #555;
-    box-shadow: 5px 2px #eee;
+    border-bottom: solid 1px #00ff41;
+    box-shadow: 5px 2px #00ff41;
+    background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
 }
 
 header img
@@ -28,6 +29,19 @@ header #links
     justify-content: flex-start;
     align-items: flex-end;
     padding-right: 20px;
+}
+
+header a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+header a:hover {
+    color: #00ff41;
+}
+
+header {
+    color: #ffffff;
 }
 
 header .cart
@@ -140,7 +154,7 @@ main > .content-form .cart-item
 .product .price
 {
     font-weight: 900;
-    color: #924a24;
+    color: #00ff41;
 }
 
 .modal-body img

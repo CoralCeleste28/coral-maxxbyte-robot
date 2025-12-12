@@ -109,7 +109,7 @@ function setMaxPrice(control)
     const label = document.getElementById("max-price-display")
     label.innerText = control.value;
 
-    const value = control.value != 1500 ? control.value : "";
+    const value = control.value != 200 ? control.value : "";
     productService.addMaxPriceFilter(value)
     productService.search();
 
