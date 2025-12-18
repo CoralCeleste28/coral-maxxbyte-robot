@@ -15,7 +15,7 @@ function login()
     const password = document.getElementById("password").value;
 
     userService.login(username, password);
-    hideModalForm()
+    hideModalForm();
 }
 
 function showImageDetailForm(product, imageUrl)
@@ -25,12 +25,12 @@ function showImageDetailForm(product, imageUrl)
         imageUrl: imageUrl
     };
 
-    templateBuilder.build('image-detail',imageDetail,'login')
+    templateBuilder.build('image-detail', imageDetail, 'login');
 }
 
 function loadHome()
 {
-    templateBuilder.build('home',{},'main')
+    templateBuilder.build('home', {}, 'main');
 
     productService.search();
     categoryService.getAllCategories(loadCategories);
@@ -81,48 +81,63 @@ function setCategory(control)
 {
     productService.addCategoryFilter(control.value);
     productService.search();
-
 }
 
 function setSubcategory(control)
 {
     productService.addSubcategoryFilter(control.value);
     productService.search();
-
 }
 
 function setMinPrice(control)
 {
-    // const slider = document.getElementById("min-price");
-    const label = document.getElementById("min-price-display")
+    const label = document.getElementById("min-price-display");
     label.innerText = control.value;
 
     const value = control.value != 0 ? control.value : "";
-    productService.addMinPriceFilter(value)
+    productService.addMinPriceFilter(value);
     productService.search();
-
 }
 
 function setMaxPrice(control)
 {
-    // const slider = document.getElementById("min-price");
-    const label = document.getElementById("max-price-display")
+    const label = document.getElementById("max-price-display");
     label.innerText = control.value;
 
     const value = control.value != 200 ? control.value : "";
-    productService.addMaxPriceFilter(value)
+    productService.addMaxPriceFilter(value);
     productService.search();
-
 }
 
 function closeError(control)
 {
     setTimeout(() => {
         control.click();
-    },3000);
+    }, 3000);
 }
 
+/* ===========================
+   PAGE LOAD INITIALIZATION
+   =========================== */
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Load home page
     loadHome();
+
+    // ---- PROMO IMAGE POPUP (DEV MODE) ----
+    const overlay = document.getElementById("promo-overlay");
+    const closeBtn = document.getElementById("close-popup");
+
+    if (overlay && closeBtn)
+    {
+        // Always show popup (no localStorage while developing)
+        setTimeout(() => {
+            overlay.classList.remove("hidden");
+        }, 800);
+
+        // Close popup when X is clicked
+        closeBtn.addEventListener("click", () => {
+            overlay.classList.add("hidden");
+        });
+    }
 });

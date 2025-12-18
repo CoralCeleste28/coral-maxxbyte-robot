@@ -3,29 +3,40 @@
 ---
 
 ## Project Overview
-The Video Game Store API is a full-stack ready Spring Boot REST API for managing products, categories, shopping carts, and user authentication for an online store.  
-It connects to a MySQL database using JDBC and follows modern RESTful design principles.
+This application allows users to browse a video game storefront, create an account, log in securely, and add products to a personal shopping cart.
+Authenticated users can view and manage their cart, while administrators can create, update, and remove products and categories.
+
+---
+
+## This project demonstrates:
+
+- Clean REST API design
+- Secure authentication with JWT
+- JDBC-based persistence
+- DAO + MVC architecture
+- Full-stack integration
 
 ---
 
 ## Key Features
+- Product browsing & filtering
+- Login / logout
+- Add to cart
+- View cart totals
+- Profile management
 
 ### Authentication
 - Secure user login using JWT tokens
-- Password hashing with BCrypt
 - Role-based authorization (`ROLE_USER`, `ROLE_ADMIN`)
-- Token-based authentication for API access
 
 ### Shopping Cart
-- Each user has a unique cart
 - Add, update, or remove products
 - Automatically updates item quantity if added again
 - Clear the entire cart
 
 ### Database
-- MySQL-backed persistent data layer
+- Utilizes a MySQL database
 - DAO pattern with Spring-managed Beans
-- Clean separation of concerns using `MySqlDaoBase` inheritance
 
 ---
 
@@ -69,7 +80,13 @@ ___
 
 ---
 
-## <center>Interesting Code
+## Future Enhancements
+
+- Order total in cart
+- Order checkout & order history
+- Payment processing integration
+- Product reviews
+- Inventory alerts
 
 
 
