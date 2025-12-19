@@ -214,7 +214,7 @@ main > .content-form .cart-item
     margin-bottom: 2px !important;
 }
 
-/* Overlay */
+/* Overlay (pop up) */
 .overlay {
     position: fixed;
     top: 0;
@@ -228,7 +228,7 @@ main > .content-form .cart-item
     z-index: 9999;
 }
 
-/* Hide by default */
+/* Hides by default */
 .hidden {
     display: none;
 }

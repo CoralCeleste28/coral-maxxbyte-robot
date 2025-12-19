@@ -26,7 +26,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
     public ShoppingCart getCartByUserId(int userId) {
 
         ShoppingCart cart = new ShoppingCart();
-        // retrieves all cart items and joins product data to populate
+        // retrieves all ShoppingCart items and joins product data to populate
         String sql = """
         SELECT *
         FROM shopping_cart
@@ -37,7 +37,7 @@ public class MySqlShoppingCartDao extends MySqlDaoBase implements ShoppingCartDa
         try (Connection connection = super.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ) {
-            //binds user ID so this is theonly cart retrieved
+            //binds user ID so this is the only cart retrieved
             preparedStatement.setInt(1, userId);
             // Executes
             ResultSet resultSet = preparedStatement.executeQuery();

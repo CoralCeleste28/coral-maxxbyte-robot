@@ -119,23 +119,24 @@ function closeError(control)
 /* ===========================
    PAGE LOAD INITIALIZATION
    =========================== */
+// This is where the behavior for the ad lies
 document.addEventListener('DOMContentLoaded', () => {
 
     // Load home page
     loadHome();
 
-    // ---- PROMO IMAGE POPUP (DEV MODE) ----
+    // ---- PROMO IMAGE POPUP  ----
     const overlay = document.getElementById("promo-overlay");
     const closeBtn = document.getElementById("close-popup");
 
     if (overlay && closeBtn)
     {
-        // Always show popup (no localStorage while developing)
+        // Always shows popup (no localStorage while developing - can look this up more later)
         setTimeout(() => {
             overlay.classList.remove("hidden");
         }, 800);
 
-        // Close popup when X is clicked
+        // Closes popup when "X" is clicked
         closeBtn.addEventListener("click", () => {
             overlay.classList.add("hidden");
         });
