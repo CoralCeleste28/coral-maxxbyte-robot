@@ -46,15 +46,25 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 
     @Override
     public Profile getByUserId(int userId) {
-        String sql = "SELECT user_id, first_name, last_name, phone, email, address, city, state, zip, " +
+        String sqlFull = "SELECT user_id, first_name, last_name, phone, email, address, city, state, zip, " +
                 " name_on_card, card_number_last4, exp_month, exp_year, billing_address, billing_city, billing_state, billing_zip, billing_country " +
                 " FROM profiles WHERE user_id = ?";
+        String sqlBase = "SELECT user_id, first_name, last_name, phone, email, address, city, state, zip FROM profiles WHERE user_id = ?";
         try (Connection conn = getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return mapRow(rs);
+            try {
+                PreparedStatement ps = conn.prepareStatement(sqlFull);
+                ps.setInt(1, userId);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            } catch (SQLException e) {
+                PreparedStatement ps = conn.prepareStatement(sqlBase);
+                ps.setInt(1, userId);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return mapRowBase(rs);
+                }
             }
             return null;
         } catch (SQLException e) {
@@ -94,16 +104,7 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
     }
 
     private Profile mapRow(ResultSet rs) throws SQLException {
-        Profile p = new Profile();
-        p.setUserId(rs.getInt("user_id"));
-        p.setFirstName(rs.getString("first_name"));
-        p.setLastName(rs.getString("last_name"));
-        p.setPhone(rs.getString("phone"));
-        p.setEmail(rs.getString("email"));
-        p.setAddress(rs.getString("address"));
-        p.setCity(rs.getString("city"));
-        p.setState(rs.getString("state"));
-        p.setZip(rs.getString("zip"));
+        Profile p = mapRowBase(rs);
         try {
             p.setNameOnCard(rs.getString("name_on_card"));
             p.setCardNumberLast4(rs.getString("card_number_last4"));
@@ -115,6 +116,20 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
             p.setBillingZip(rs.getString("billing_zip"));
             p.setBillingCountry(rs.getString("billing_country"));
         } catch (SQLException ignored) { }
+        return p;
+    }
+
+    private Profile mapRowBase(ResultSet rs) throws SQLException {
+        Profile p = new Profile();
+        p.setUserId(rs.getInt("user_id"));
+        p.setFirstName(rs.getString("first_name"));
+        p.setLastName(rs.getString("last_name"));
+        p.setPhone(rs.getString("phone"));
+        p.setEmail(rs.getString("email"));
+        p.setAddress(rs.getString("address"));
+        p.setCity(rs.getString("city"));
+        p.setState(rs.getString("state"));
+        p.setZip(rs.getString("zip"));
         return p;
     }
 }

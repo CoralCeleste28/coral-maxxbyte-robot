@@ -30,6 +30,7 @@ function showImageDetailForm(product, imageUrl)
 
 function loadHome()
 {
+    document.body.classList.remove('restaurant-view');
     const data = {
         image1: config.assets.homeImage1,
         image2: config.assets.homeImage2

@@ -4,47 +4,47 @@
     <div class="payment-form">
         <div class="mb-3">
             <label class="form-label" for="nameOnCard">Name on Card</label>
-            <input type="text" class="form-control" id="nameOnCard" placeholder="Name on card">
+            <input type="text" class="form-control" id="nameOnCard" placeholder="Name on card" value="{{nameOnCard}}">
         </div>
         <div class="mb-3">
             <label class="form-label" for="cardNumber">Card Number</label>
-            <input type="text" class="form-control" id="cardNumber" placeholder="Card number">
+            <input type="text" class="form-control" id="cardNumber" placeholder="Card number" value="{{cardNumberDisplay}}">
         </div>
         <div class="row g-2 mb-3">
             <div class="col-6">
                 <label class="form-label" for="expMonth">Exp Month</label>
-                <input type="text" class="form-control" id="expMonth" placeholder="MM">
+                <input type="text" class="form-control" id="expMonth" placeholder="MM" value="{{expMonth}}">
             </div>
             <div class="col-6">
                 <label class="form-label" for="expYear">Exp Year</label>
-                <input type="text" class="form-control" id="expYear" placeholder="YYYY">
+                <input type="text" class="form-control" id="expYear" placeholder="YYYY" value="{{expYear}}">
             </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="billingAddress">Billing Address</label>
-            <input type="text" class="form-control" id="billingAddress" placeholder="Street address">
+            <input type="text" class="form-control" id="billingAddress" placeholder="Street address" value="{{billingAddress}}">
         </div>
         <div class="mb-3">
             <label class="form-label" for="billingCity">City</label>
-            <input type="text" class="form-control" id="billingCity" placeholder="City">
+            <input type="text" class="form-control" id="billingCity" placeholder="City" value="{{billingCity}}">
         </div>
         <div class="mb-3">
             <label class="form-label" for="billingCountry">Country</label>
-            <input type="text" class="form-control" id="billingCountry" placeholder="Country">
+            <input type="text" class="form-control" id="billingCountry" placeholder="Country" value="{{billingCountry}}">
         </div>
         <div class="row g-2 mb-3">
             <div class="col-6">
                 <label class="form-label" for="billingState">State</label>
-                <input type="text" class="form-control" id="billingState" placeholder="State">
+                <input type="text" class="form-control" id="billingState" placeholder="State" value="{{billingState}}">
             </div>
             <div class="col-6">
                 <label class="form-label" for="billingZip">Zip</label>
-                <input type="text" class="form-control" id="billingZip" placeholder="Zip">
+                <input type="text" class="form-control" id="billingZip" placeholder="Zip" value="{{billingZip}}">
             </div>
         </div>
         <div class="mb-3">
             <label class="form-label" for="paymentEmail">Email</label>
-            <input type="email" class="form-control" id="paymentEmail" placeholder="Email">
+            <input type="email" class="form-control" id="paymentEmail" placeholder="Email" value="{{email}}">
         </div>
         <button type="button" class="btn btn-primary" onclick="confirmPaymentAndGoToReview()">Confirm Information</button>
     </div>

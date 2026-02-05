@@ -535,7 +535,11 @@ main > .content-form .cart-item
     border-radius: 30px;
 }
 
-/* Screen 3: Restaurant */
+/* Screen 3: Restaurant - hide BiteBot logo in header on this screen */
+body.restaurant-view header .brand-logo {
+    display: none;
+}
+
 .restaurant-screen {
     text-align: center;
 }
@@ -654,8 +658,26 @@ main > .content-form .cart-item
     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 
-/* Screen 6: Review */
-.review-screen h2 { margin-bottom: 1.5rem; }
+/* Screen 6: Confirmation / Review */
+.confirmation-intro {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+.confirmation-cart-items .review-item {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid #eee;
+}
+.confirmation-payment-details p {
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+}
+.confirmation-address {
+    font-size: 1rem;
+    line-height: 1.4;
+    margin: 0;
+}
+.review-screen h2 { margin-bottom: 0.5rem; }
 .review-section {
     background: #fff;
     padding: 1rem 1.25rem;

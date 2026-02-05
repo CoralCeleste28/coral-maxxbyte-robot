@@ -1,6 +1,16 @@
 # Create user: coralestrada28 / BiteBot4life
 
-## Option 1: PowerShell (recommended)
+## Option 1: Seed endpoint (easiest)
+
+1. **Start the backend** (Spring Boot on http://localhost:8080).
+2. **Open in your browser:**  
+   **http://localhost:8080/api/seed-user**
+3. You should see: `"Account created. Log in with username: coralestrada28 and password: BiteBot4life"`.
+4. Go back to the app and log in with **coralestrada28** / **BiteBot4life**.
+
+If the user already exists, the page will say so and you can log in with the same credentials.
+
+## Option 2: PowerShell
 
 1. **Start the backend** so it is running on `http://localhost:8080`.
 2. From the project root, run:

@@ -25,7 +25,8 @@ class ProfileService
     loadProfileForFlow()
     {
         const url = `${config.baseUrl}/profile`;
-        return axios.get(url)
+        const headers = (typeof userService !== 'undefined') ? userService.getHeaders() : {};
+        return axios.get(url, { headers })
              .then(response => {
                  this.lastProfile = response.data;
              })
