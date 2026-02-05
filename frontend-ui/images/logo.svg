@@ -5,22 +5,19 @@
       font-family: 'Helvetica Neue', Arial, sans-serif;
       font-size: 90px;
       font-weight: 700;
-      fill: #ffffff;
+      fill: #c51f2c;
       letter-spacing: -6px;
-      text-shadow: 0 0 10px #00ff41;
+      text-shadow: 0 0 10px rgba(197, 31, 44, 0.5);
     }
     .shop-text {
       font-family: 'Helvetica Neue', Arial, sans-serif;
       font-size: 40px;
       font-weight: 300;
-      fill: #00ff41;
+      fill: #c51f2c;
       letter-spacing: 18px;
     }
   </style>
   
-  <!-- "videogame" text -->
-  <text x="10" y="110" class="easy-text">videogame</text>
-  
-  <!-- "store" text -->
-  <text x="28" y="160" class="shop-text">store</text>
+  <!-- "BiteBot" text -->
+  <text x="10" y="110" class="easy-text">BiteBot</text>
 </svg>

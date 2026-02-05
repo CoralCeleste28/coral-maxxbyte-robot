@@ -32,6 +32,15 @@ CREATE TABLE profiles (
     city VARCHAR(50) NOT NULL,
     state VARCHAR(50) NOT NULL,
     zip VARCHAR(20) NOT NULL,
+    name_on_card VARCHAR(100),
+    card_number_last4 VARCHAR(4),
+    exp_month VARCHAR(2),
+    exp_year VARCHAR(4),
+    billing_address VARCHAR(200),
+    billing_city VARCHAR(50),
+    billing_state VARCHAR(50),
+    billing_zip VARCHAR(20),
+    billing_country VARCHAR(50),
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );

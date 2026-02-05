@@ -2,12 +2,15 @@ let profileService;
 
 class ProfileService
 {
+    lastProfile = null;
+
     loadProfile()
     {
         const url = `${config.baseUrl}/profile`;
 
         axios.get(url)
              .then(response => {
+                 this.lastProfile = response.data;
                  templateBuilder.build("profile", response.data, "main")
              })
              .catch(error => {
@@ -17,6 +20,16 @@ class ProfileService
 
                  templateBuilder.append("error", data, "errors")
              })
+    }
+
+    loadProfileForFlow()
+    {
+        const url = `${config.baseUrl}/profile`;
+        return axios.get(url)
+             .then(response => {
+                 this.lastProfile = response.data;
+             })
+             .catch(() => { this.lastProfile = null; })
     }
 
     updateProfile(profile)

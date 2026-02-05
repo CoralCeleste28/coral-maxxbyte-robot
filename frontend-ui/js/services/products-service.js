@@ -7,24 +7,10 @@ class ProductService {
 
     filter = {
         cat: undefined,
-        minPrice: undefined,
-        maxPrice: undefined,
         subCategory: undefined,
         queryString: () => {
             let qs = "";
             if(this.filter.cat){ qs = `cat=${this.filter.cat}`; }
-            if(this.filter.minPrice)
-            {
-                const minP = `minPrice=${this.filter.minPrice}`;
-                if(qs.length>0) {   qs += `&${minP}`; }
-                else { qs = minP; }
-            }
-            if(this.filter.maxPrice)
-            {
-                const maxP = `maxPrice=${this.filter.maxPrice}`;
-                if(qs.length>0) {   qs += `&${maxP}`; }
-                else { qs = maxP; }
-            }
             if(this.filter.subCategory)
             {
                 const sub = `subCategory=${this.filter.subCategory}`;
@@ -54,16 +40,6 @@ class ProductService {
         if(cat == 0) this.clearCategoryFilter();
         else this.filter.cat = cat;
     }
-    addMinPriceFilter(price)
-    {
-        if(price == 0 || price == "") this.clearMinPriceFilter();
-        else this.filter.minPrice = price;
-    }
-    addMaxPriceFilter(price)
-    {
-        if(price == 0 || price == "") this.clearMaxPriceFilter();
-        else this.filter.maxPrice = price;
-    }
     addSubcategoryFilter(subCategory)
     {
         if(subCategory == "") this.clearSubcategoryFilter();
@@ -73,14 +49,6 @@ class ProductService {
     clearCategoryFilter()
     {
         this.filter.cat = undefined;
-    }
-    clearMinPriceFilter()
-    {
-        this.filter.minPrice = undefined;
-    }
-    clearMaxPriceFilter()
-    {
-        this.filter.maxPrice = undefined;
     }
     clearSubcategoryFilter()
     {

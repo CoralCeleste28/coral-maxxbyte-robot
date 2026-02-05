@@ -220,6 +220,15 @@ main > .content-form .cart-item
     text-align: center;
 }
 
+.hero-title
+{
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #c51f2c;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
 .hero-image
 {
     max-width: 1100px;
@@ -463,4 +472,271 @@ main > .content-form .cart-item
     display: block;
     border-radius: 8px;
     cursor: pointer;
+}
+
+/* ========== BiteBot flow screens ========== */
+.screen {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Screen 1: Home */
+.bitebot-home {
+    text-align: center;
+    padding: 3rem 1.5rem;
+}
+.bitebot-brand {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #c51f2c;
+    margin-bottom: 2rem;
+}
+.bitebot-hero-images {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+.bitebot-hero-img {
+    max-width: 320px;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+.btn-order-now {
+    padding: 12px 32px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    background: #c51f2c;
+    border-color: #c51f2c;
+}
+.btn-order-now:hover {
+    background: #a01a24;
+    border-color: #a01a24;
+}
+
+/* Screen 2: Login */
+.login-screen {
+    max-width: 420px;
+    margin: 2rem auto;
+}
+.login-screen h2 { margin-bottom: 0.5rem; }
+.login-subtitle {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+.login-form-box .form-label { font-weight: 600; }
+.btn-login-submit {
+    width: 100%;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+/* Screen 3: Restaurant */
+.restaurant-screen {
+    text-align: center;
+}
+.restaurant-name {
+    font-size: 1.75rem;
+    color: #222;
+    margin-bottom: 0.5rem;
+}
+.restaurant-logo {
+    max-width: 180px;
+    max-height: 80px;
+    object-fit: contain;
+    margin-bottom: 2rem;
+}
+.menu-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    text-align: left;
+}
+.menu-item-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+.menu-item-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.menu-item-body { padding: 1rem; }
+.menu-item-body h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.menu-item-desc {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+.menu-item-price {
+    font-weight: 700;
+    color: #c51f2c;
+    margin-bottom: 0.75rem;
+}
+
+/* Screen 4: Order */
+.order-screen h2 { margin-bottom: 1.5rem; }
+.order-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.order-item-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.order-item-thumb {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.order-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.order-item-price { color: #c51f2c; font-weight: 600; }
+.order-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.order-item-qty .qty-value { min-width: 1.5rem; text-align: center; }
+.order-totals {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+.order-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+.order-total-row {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #dee2e6;
+}
+.btn-add-to-cart {
+    width: 100%;
+    padding: 12px;
+    border-radius: 30px;
+}
+
+/* Screen 5: Payment */
+.payment-screen h2 { margin-bottom: 0.5rem; }
+.payment-subtitle {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+.payment-form {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* Screen 6: Review */
+.review-screen h2 { margin-bottom: 1.5rem; }
+.review-section {
+    background: #fff;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.review-section h3 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: #555;
+}
+.review-item {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid #eee;
+}
+.review-totals .order-row { margin-bottom: 0.25rem; }
+.btn-place-order {
+    width: 100%;
+    padding: 12px;
+    border-radius: 30px;
+    margin-top: 0.5rem;
+}
+
+/* Screen 7: Order status */
+.order-status-screen {
+    text-align: center;
+}
+.order-status-screen h2 { margin-bottom: 2rem; }
+.status-progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+.status-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 12px;
+    background: #f0f0f0;
+    opacity: 0.7;
+}
+.status-step.active {
+    opacity: 1;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(197, 31, 44, 0.2);
+}
+.status-step.done {
+    opacity: 1;
+    background: #e8f5e9;
+}
+.status-step .status-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+.status-step .status-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.status-connector {
+    width: 40px;
+    height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+}
+.status-connector.done {
+    background: #c51f2c;
+}
+.status-message {
+    color: #666;
+    font-size: 0.9rem;
 }

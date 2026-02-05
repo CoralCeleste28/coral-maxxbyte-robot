@@ -1,29 +1,8 @@
-<section class="hero-section">
-    <img class="hero-image" src="{{heroImage}}" alt="BiteBot hero">
-    <div class="hero-actions">
-        <button class="btn btn-primary hero-btn" onclick="scrollToMenu()">Order Now</button>
-        <button class="btn btn-outline-light hero-btn" onclick="showLoginForm()">Login</button>
+<section class="bitebot-home">
+    <h1 class="bitebot-brand">BiteBot</h1>
+    <div class="bitebot-hero-images">
+        <img class="bitebot-hero-img" src="{{image1}}" alt="BiteBot">
+        <img class="bitebot-hero-img" src="{{image2}}" alt="BiteBot">
     </div>
-</section>
-
-<section id="menu-section" class="menu-section">
-    <div class="menu-visual">
-        <img src="{{menuImage}}" alt="Menu highlight">
-    </div>
-    <div class="menu-content">
-        <h2>Featured Menu</h2>
-        <p class="menu-subtitle">Quick campus meals delivered by robots.</p>
-        <div id="content" class="menu-grid"></div>
-    </div>
-</section>
-
-<section class="status-section">
-    <div class="status-content">
-        <h2>Order Status</h2>
-        <p>Track your delivery from placement to arrival.</p>
-        <button class="btn btn-primary" onclick="loadOrders()">Track Order</button>
-    </div>
-    <div class="status-visual">
-        <img src="{{statusImage}}" alt="Order status">
-    </div>
+    <button type="button" class="btn btn-primary btn-order-now" onclick="goToLoginScreen()">ORDER NOW</button>
 </section>

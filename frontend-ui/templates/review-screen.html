@@ -1,0 +1,21 @@
+<section class="screen review-screen">
+    <h2>Review Your Order</h2>
+    <div class="review-section">
+        <h3>Order Summary</h3>
+        <div id="review-order-items"></div>
+        <div class="review-totals">
+            <div class="order-row"><span>Subtotal</span><span id="review-subtotal">$0.00</span></div>
+            <div class="order-row"><span>Taxes</span><span id="review-taxes">$0.00</span></div>
+            <div class="order-row order-total-row"><span>Total</span><span id="review-total">$0.00</span></div>
+        </div>
+    </div>
+    <div class="review-section">
+        <h3>Payment</h3>
+        <p id="review-payment-summary"></p>
+    </div>
+    <div class="review-section">
+        <h3>Delivery Address</h3>
+        <p id="review-delivery-address"></p>
+    </div>
+    <button type="button" class="btn btn-primary btn-place-order" onclick="placeOrderAndGoToStatus()">Place Order</button>
+</section>

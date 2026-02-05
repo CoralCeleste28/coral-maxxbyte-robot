@@ -31,13 +31,10 @@ function showImageDetailForm(product, imageUrl)
 function loadHome()
 {
     const data = {
-        heroImage: config.assets.hero,
-        menuImage: config.assets.menu,
-        statusImage: config.assets.status
+        image1: config.assets.homeImage1,
+        image2: config.assets.homeImage2
     };
-
     templateBuilder.build('home', data, 'main');
-    productService.search();
 }
 
 function scrollToMenu()
@@ -181,26 +178,6 @@ function setCategory(control)
 function setSubcategory(control)
 {
     productService.addSubcategoryFilter(control.value);
-    productService.search();
-}
-
-function setMinPrice(control)
-{
-    const label = document.getElementById("min-price-display");
-    label.innerText = control.value;
-
-    const value = control.value != 0 ? control.value : "";
-    productService.addMinPriceFilter(value);
-    productService.search();
-}
-
-function setMaxPrice(control)
-{
-    const label = document.getElementById("max-price-display");
-    label.innerText = control.value;
-
-    const value = control.value != 200 ? control.value : "";
-    productService.addMaxPriceFilter(value);
     productService.search();
 }
 

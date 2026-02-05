@@ -83,7 +83,7 @@ class UserService {
                 showOrders: this.isLoggedIn(),
                 showRobotStatus: isStaffAdmin,
                 showCart: isCustomer,
-                logoUrl: config.assets.hero
+                logoUrl: config.assets.logo
             };
 
         templateBuilder.build('header', user, 'header-user');
