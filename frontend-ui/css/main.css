@@ -620,7 +620,10 @@ main > .content-form .cart-item
     z-index: 0;
 }
 .bitebot-home-new .hero-bg.hero-bg-custom {
-    background: center/cover no-repeat;
+    background-color: transparent;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .bitebot-home-new .hero-bg.hero-bg-custom::before {
     display: none;
