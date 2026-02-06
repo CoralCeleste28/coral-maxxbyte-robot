@@ -10,43 +10,91 @@ header
     align-items: center;
     height: 70px;
     padding: 5px 20px;
-    background: #ffffff;
-    border-bottom: 2px solid #c51f2c;
+    background: #bc1823;
+    border-bottom: 2px solid rgba(0,0,0,0.15);
 }
 
+header .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 header img.brand-logo
 {
     height: 48px;
     width: auto;
     border-radius: 8px;
 }
-
-header div{
-    height: 100%;
-    display: flex;
-    align-items: flex-end;
+header .header-brand-text {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.35rem;
 }
 
-header #links
-{
-    gap: 18px;
-    justify-content: flex-start;
+header #links {
+    display: flex;
+    gap: 24px;
     align-items: center;
-    padding-right: 20px;
+    flex-shrink: 0;
+}
+header .header-nav-link {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.95rem;
+}
+header .header-nav-order {
+    font-weight: 700;
+}
+header .header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+header .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+}
+header .header-signin-btn {
+    background: #fff;
+    color: #bc1823;
+    padding: 8px 20px;
+    border-radius: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+header .header-signin-btn:hover {
+    background: #ffcccc;
+    color: #8b1119;
+}
+header .header-user-icon {
+    font-size: 1.25rem;
+    color: #fff;
+}
+header .header-welcome {
+    font-size: 0.9rem;
+}
+header div:not(#links):not(.header-center):not(.header-right) {
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 header a {
-    color: #222222;
+    color: #fff;
     text-decoration: none;
     font-weight: 600;
 }
 
 header a:hover {
-    color: #c51f2c;
+    color: #ffcccc;
 }
 
 header {
-    color: #222222;
+    color: #fff;
 }
 
 header .cart
@@ -109,6 +157,14 @@ main > .content-form .cart-item
 {
     margin: 10px 0;
     color: maroon;
+}
+
+.profile-section-title
+{
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1.25rem 0 0.5rem;
+    color: #333;
 }
 
 .menu-grid
@@ -486,8 +542,32 @@ main > .content-form .cart-item
     text-align: center;
     padding: 3rem 1.5rem;
 }
+.bitebot-home-logo {
+    display: block;
+    margin: 1rem auto 0;
+    max-width: 560px;
+    width: 100%;
+    height: auto;
+}
+.bitebot-slogan {
+    font-size: 2.5rem;
+    color: #c51f2c;
+    margin: 0.1rem 0 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-shadow:
+        -4px -4px 0 #000,
+        4px -4px 0 #000,
+        -4px 4px 0 #000,
+        4px 4px 0 #000,
+        -3px 0 0 #000,
+        3px 0 0 #000,
+        0 -3px 0 #000,
+        0 3px 0 #000,
+        0 0 8px #000;
+}
 .bitebot-brand {
-    font-size: 3rem;
+    font-size: 4.5rem;
     font-weight: 700;
     color: #c51f2c;
     margin-bottom: 2rem;
@@ -517,6 +597,118 @@ main > .content-form .cart-item
     border-color: #a01a24;
 }
 
+/* Home - new hero + CTA layout */
+.bitebot-home-new {
+    min-height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+}
+.bitebot-home-new .hero-section {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 50vh;
+    padding: 2rem 3rem;
+}
+.bitebot-home-new .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #3d2914 0%, #2a1c0e 25%, #1f1609 50%, #2a1c0e 75%, #3d2914 100%);
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+.bitebot-home-new .hero-bg.hero-bg-custom {
+    background: center/cover no-repeat;
+}
+.bitebot-home-new .hero-bg.hero-bg-custom::before {
+    display: none;
+}
+.bitebot-home-new .hero-bg[style*="background-image"] {
+    background-size: cover;
+    background-position: center;
+}
+.bitebot-home-new .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 3px);
+    pointer-events: none;
+}
+.bitebot-home-new .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 3rem;
+}
+.bitebot-home-new .hero-slogan-wrap { flex-shrink: 0; }
+.bitebot-home-new .hero-slogan-line {
+    margin: 0;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: transparent;
+    -webkit-text-stroke: 2px #fff;
+    line-height: 1.15;
+}
+.bitebot-home-new .hero-food-wrap {
+    flex-shrink: 0;
+    max-width: 420px;
+}
+.bitebot-home-new .hero-food-img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    object-fit: cover;
+}
+.bitebot-home-new .cta-bar {
+    display: flex;
+    align-items: center;
+    background: #e8e6e3;
+    padding: 1rem 2rem;
+    margin: 0 2rem 2rem;
+    border-radius: 12px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.bitebot-home-new .cta-start-order {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #bc1823;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 14px 20px;
+    text-align: left;
+    cursor: pointer;
+}
+.bitebot-home-new .cta-delivery {
+    background: #bc1823;
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+}
+.bitebot-home-new .cta-delivery:hover { background: #9b141c; }
+.bitebot-home-new .cta-start-order:hover { color: #8b1119; }
+
 /* Screen 2: Login */
 .login-screen {
     max-width: 420px;
@@ -535,8 +727,8 @@ main > .content-form .cart-item
     border-radius: 30px;
 }
 
-/* Screen 3: Restaurant - hide BiteBot logo in header on this screen */
-body.restaurant-view header .brand-logo {
+/* Screen 3: Restaurant - hide BiteBot logo and text in header on this screen */
+body.restaurant-view header .header-brand {
     display: none;
 }
 
@@ -706,25 +898,58 @@ body.restaurant-view header .brand-logo {
 .order-status-screen {
     text-align: center;
 }
-.order-status-screen h2 { margin-bottom: 2rem; }
-.status-progress-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
+.order-status-screen h2 { margin-bottom: 1rem; }
+
+/* Single unified status bar: bar on top, checkmarks below */
+.status-unified-bar {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto 1.5rem;
+    padding-top: 8px;
+    min-height: 140px;
+}
+.status-bar-track {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 8px;
+    height: 8px;
+    background: linear-gradient(to right, #e0e0e0 0%, #eee 50%, #e0e0e0 100%);
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+}
+.status-logo-runner {
+    position: absolute;
+    left: 0;
+    top: 12px;
+    transform: translateY(-50%) translateX(-50%);
+    width: 48px;
+    height: 48px;
+    z-index: 2;
+    transition: left 0.5s linear;
+}
+.status-moving-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .status-step {
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    padding: 1rem;
+    gap: 0.35rem;
+    padding: 6px 8px;
     border-radius: 12px;
     background: #f0f0f0;
     opacity: 0.7;
+    z-index: 1;
+    top: 32px;
 }
+.status-step-1 { left: 0; transform: translateX(-50%); }
+.status-step-2 { left: 50%; transform: translateX(-50%); }
+.status-step-3 { left: 100%; transform: translateX(-50%); }
 .status-step.active {
     opacity: 1;
     background: #fff;
@@ -735,8 +960,8 @@ body.restaurant-view header .brand-logo {
     background: #e8f5e9;
 }
 .status-step .status-icon {
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -749,14 +974,11 @@ body.restaurant-view header .brand-logo {
     height: 100%;
     object-fit: cover;
 }
-.status-connector {
-    width: 40px;
-    height: 4px;
-    background: #ddd;
-    border-radius: 2px;
-}
-.status-connector.done {
-    background: #c51f2c;
+.status-step span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
 }
 .status-message {
     color: #666;

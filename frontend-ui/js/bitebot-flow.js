@@ -2,7 +2,9 @@
  * BiteBot ordering flow: Home → Login → Restaurant → Order → Payment → Review → Order Status
  */
 const TAX_RATE = 0.08;
-const STATUS_UPDATE_INTERVAL_MS = 10 * 60 * 1000; // 10 minutes
+const STATUS_UPDATE_INTERVAL_MS = 10 * 60 * 1000;   // 10 min between status checks
+const STATUS_LEG_MS = 10 * 60 * 1000;                // 10 min: Order Placed → Order En Route
+const STATUS_TOTAL_MS = 20 * 60 * 1000;              // 20 min total: then Order En Route → Order Arrived
 
 const bitebotMenu = {
     taco: { id: 'taco', name: 'Taco Combo', price: 15, image: 'tacoImage' },
@@ -14,8 +16,10 @@ let bitebotOrder = {
     payment: null,
     deliveryAddress: null,
     orderId: null,
-    status: 'PLACED'
+    status: 'PLACED',
+    statusScreenEnteredAt: null
 };
+let statusLogoUpdaterIntervalId = null;
 
 function getOrderSubtotal() {
     return bitebotOrder.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -112,16 +116,13 @@ function loginAndGoToRestaurant() {
                 const token = data.token || data.jwt;
                 if (token) axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                 if (typeof productService !== 'undefined' && productService.enableButtons) productService.enableButtons();
-                if (typeof cartService !== 'undefined' && cartService.loadCart) cartService.loadCart();
+                goToRestaurantScreen();
+            } else {
+                goToRestaurantScreen();
             }
-            goToRestaurantScreen();
         })
-        .catch((err) => {
-            const msg = err.response?.data?.message || err.response?.data?.error || err.message;
-            const hint = ' <br><small>First time? Open <a href="' + config.baseUrl + '/api/seed-user" target="_blank">' + config.baseUrl + '/api/seed-user</a> to create the account, then try again.</small>';
-            if (errEl) {
-                errEl.innerHTML = (msg || 'Login failed. Check username and password.') + hint;
-            }
+        .catch(() => {
+            if (errEl) errEl.innerHTML = 'Login failed. <a href="' + config.baseUrl + '/api/seed-user" target="_blank">Create test user</a>';
         });
 }
 
@@ -141,65 +142,58 @@ function goToOrderScreen() {
     setTimeout(renderOrderScreen, 50);
 }
 
-// Simulated payment data used when profile has no saved payment info
-const DEFAULT_PAYMENT_SIMULATION = {
-    nameOnCard: 'Test User',
-    cardNumberDisplay: '4111111111111111',
-    cardNumberLast4: '1111',
-    expMonth: '12',
-    expYear: '2028',
-    billingAddress: '123 Main Street',
-    billingCity: 'Dallas',
-    billingCountry: 'USA',
-    billingState: 'TX',
-    billingZip: '75001',
-    email: 'test@bitebot.com'
-};
-
-function getPaymentFormData(profile) {
-    const p = profile || {};
-    return {
-        nameOnCard: p.nameOnCard || DEFAULT_PAYMENT_SIMULATION.nameOnCard,
-        cardNumberDisplay: (p.cardNumberLast4) ? '••••••••' + p.cardNumberLast4 : DEFAULT_PAYMENT_SIMULATION.cardNumberDisplay,
-        expMonth: p.expMonth || DEFAULT_PAYMENT_SIMULATION.expMonth,
-        expYear: p.expYear || DEFAULT_PAYMENT_SIMULATION.expYear,
-        billingAddress: p.billingAddress || DEFAULT_PAYMENT_SIMULATION.billingAddress,
-        billingCity: p.billingCity || DEFAULT_PAYMENT_SIMULATION.billingCity,
-        billingCountry: p.billingCountry || DEFAULT_PAYMENT_SIMULATION.billingCountry,
-        billingState: p.billingState || DEFAULT_PAYMENT_SIMULATION.billingState,
-        billingZip: p.billingZip || DEFAULT_PAYMENT_SIMULATION.billingZip,
-        email: p.email || DEFAULT_PAYMENT_SIMULATION.email
-    };
-}
-
-function fillPaymentFormInputs(data) {
-    if (!data) return;
-    const set = (id, value) => {
-        const el = document.getElementById(id);
-        if (el && value != null) el.value = value;
-    };
-    set('nameOnCard', data.nameOnCard);
-    set('cardNumber', data.cardNumberDisplay);
-    set('expMonth', data.expMonth);
-    set('expYear', data.expYear);
-    set('billingAddress', data.billingAddress);
-    set('billingCity', data.billingCity);
-    set('billingCountry', data.billingCountry);
-    set('billingState', data.billingState);
-    set('billingZip', data.billingZip);
-    set('paymentEmail', data.email);
-}
-
 function goToPaymentScreen() {
-    if (bitebotOrder.items.length === 0) {
+    if (!bitebotOrder.items.length) {
         const errEl = document.getElementById('errors');
-        if (errEl) { errEl.innerHTML = '<div class="alert alert-warning">Add at least one item to your order.</div>'; }
+        if (errEl) errEl.innerHTML = '<div class="alert alert-warning">Add at least one item to your order.</div>';
         return;
     }
+    const getPaymentFormData = (profile) => {
+        const p = profile || {};
+        const hasAny = p.nameOnCard || p.billingAddress || p.address || p.email || p.cardNumberLast4;
+        const defaultPayment = {
+            nameOnCard: 'Cardholder Name',
+            cardNumberDisplay: '4111 1111 1111 1111',
+            expMonth: '12',
+            expYear: '2028',
+            billingAddress: '123 Main St',
+            billingCity: 'Dallas',
+            billingState: 'TX',
+            billingZip: '75001',
+            billingCountry: 'USA',
+            email: 'you@example.com'
+        };
+        if (hasAny) {
+            return {
+                nameOnCard: p.nameOnCard || '',
+                cardNumberDisplay: (p.cardNumberLast4) ? '•••• ' + p.cardNumberLast4 : (p.cardNumber || ''),
+                expMonth: p.expMonth || '',
+                expYear: p.expYear || '',
+                billingAddress: p.billingAddress || p.address || '',
+                billingCity: p.billingCity || p.city || '',
+                billingState: p.billingState || p.state || '',
+                billingZip: p.billingZip || p.zip || '',
+                billingCountry: p.billingCountry || '',
+                email: p.email || ''
+            };
+        }
+        return defaultPayment;
+    };
+    const fillPaymentFormInputs = (data) => {
+        const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+        set('nameOnCard', data.nameOnCard);
+        set('cardNumber', data.cardNumberDisplay);
+        set('expMonth', data.expMonth);
+        set('expYear', data.expYear);
+        set('billingAddress', data.billingAddress);
+        set('billingCity', data.billingCity);
+        set('billingState', data.billingState);
+        set('billingZip', data.billingZip);
+        set('billingCountry', data.billingCountry);
+        set('paymentEmail', data.email);
+    };
     const loadThenShow = () => {
-        const fromProfile = (typeof profileService !== 'undefined' && profileService.lastProfile)
-            ? profileService.lastProfile
-            : null;
+        const fromProfile = (typeof profileService !== 'undefined' && profileService.lastProfile) ? profileService.lastProfile : null;
         const fromSession = bitebotOrder.payment;
         const data = getPaymentFormData(fromProfile || fromSession);
         templateBuilder.build('payment-screen', data, 'main', () => fillPaymentFormInputs(data));
@@ -279,7 +273,6 @@ function renderReviewScreen() {
     if (el('review-subtotal')) el('review-subtotal').textContent = '$' + subtotal.toFixed(2);
     if (el('review-taxes')) el('review-taxes').textContent = '$' + tax.toFixed(2);
     if (el('review-total')) el('review-total').textContent = '$' + total.toFixed(2);
-
     const p = bitebotOrder.payment || {};
     const paymentEl = document.getElementById('review-payment-full');
     if (paymentEl) {
@@ -292,7 +285,6 @@ function renderReviewScreen() {
             p.email && `<p><strong>Email:</strong> ${p.email}</p>`
         ].filter(Boolean).join('') || '<p>Payment on file</p>';
     }
-
     const delivery = bitebotOrder.deliveryAddress;
     const profile = (typeof profileService !== 'undefined' && profileService.lastProfile) ? profileService.lastProfile : {};
     const deliveryStr = (delivery && [delivery.address, delivery.city, delivery.state, delivery.zip].filter(Boolean).join(', ')) ||
@@ -320,41 +312,79 @@ function placeOrderAndGoToStatus() {
             bitebotOrder.orderId = (data && data.orderId != null) ? data.orderId : (data && data.id != null) ? data.id : null;
             bitebotOrder.status = 'PLACED';
             bitebotOrder.items = [];
+            bitebotOrder.statusScreenEnteredAt = Date.now();
             goToOrderStatusScreen();
             if (bitebotOrder.orderId) startStatusPolling();
         })
         .catch(() => {
-            templateBuilder.append('error', { error: 'Order submission failed.' }, 'errors');
+            const errEl = document.getElementById('errors');
+            if (errEl) errEl.innerHTML = '<div class="alert alert-danger">Order could not be placed. Please try again.</div>';
         });
 }
 
-let statusPollingTimer = null;
-
-function goToOrderStatusScreen() {
-    const data = getOrderStatusTemplateData();
-    templateBuilder.build('order-status-screen', data, 'main');
-}
-
 function getOrderStatusTemplateData() {
-    const status = (bitebotOrder.status || 'PLACED').toUpperCase();
-    const step1Done = ['PLACED', 'EN_ROUTE', 'ARRIVED'].includes(status);
-    const step2Done = ['EN_ROUTE', 'ARRIVED'].includes(status);
-    const step3Done = status === 'ARRIVED';
+    const status = bitebotOrder.status || 'PLACED';
+    const steps = { step1Class: '', step2Class: '', step3Class: '', connector1Class: '', connector2Class: '' };
+    if (status === 'PLACED') {
+        steps.step1Class = 'active';
+        steps.connector1Class = 'pending';
+        steps.connector2Class = 'pending';
+    } else if (status === 'EN_ROUTE' || status === 'IN_TRANSIT') {
+        steps.step1Class = 'done';
+        steps.step2Class = 'active';
+        steps.connector1Class = 'done';
+        steps.connector2Class = 'pending';
+    } else {
+        steps.step1Class = 'done';
+        steps.step2Class = 'done';
+        steps.step3Class = 'active';
+        steps.connector1Class = 'done';
+        steps.connector2Class = 'done';
+    }
     return {
-        step1Class: 'active' + (step1Done ? ' done' : ''),
-        step2Class: (status === 'EN_ROUTE' ? 'active ' : '') + (step2Done ? 'done' : ''),
-        step3Class: (status === 'ARRIVED' ? 'active done' : ''),
-        connector1Class: step1Done ? 'done' : '',
-        connector2Class: step2Done ? 'done' : '',
+        ...steps,
         statusPlacedImage: config.assets.statusPlacedImage,
         statusEnRouteImage: config.assets.statusEnRouteImage,
-        statusArrivedImage: config.assets.statusArrivedImage
+        statusArrivedImage: config.assets.statusArrivedImage,
+        statusLogo: config.assets.logo
     };
 }
 
+function updateStatusLogoPosition() {
+    const runner = document.querySelector('.order-status-screen .status-logo-runner');
+    if (!runner || bitebotOrder.statusScreenEnteredAt == null) return;
+    const elapsed = Date.now() - bitebotOrder.statusScreenEnteredAt;
+    let pct;
+    if (elapsed >= STATUS_TOTAL_MS) {
+        pct = 100;
+    } else if (elapsed < STATUS_LEG_MS) {
+        pct = (elapsed / STATUS_LEG_MS) * 50;
+    } else {
+        pct = 50 + ((elapsed - STATUS_LEG_MS) / STATUS_LEG_MS) * 50;
+    }
+    runner.style.left = pct + '%';
+    runner.style.transform = 'translateY(-50%) translateX(-50%)';
+}
+
+function startStatusLogoUpdater() {
+    if (statusLogoUpdaterIntervalId != null) {
+        clearInterval(statusLogoUpdaterIntervalId);
+        statusLogoUpdaterIntervalId = null;
+    }
+    if (bitebotOrder.statusScreenEnteredAt == null) {
+        bitebotOrder.statusScreenEnteredAt = Date.now();
+    }
+    updateStatusLogoPosition();
+    statusLogoUpdaterIntervalId = setInterval(updateStatusLogoPosition, 500);
+}
+
+function goToOrderStatusScreen() {
+    const data = getOrderStatusTemplateData();
+    templateBuilder.build('order-status-screen', data, 'main', startStatusLogoUpdater);
+}
+
 function startStatusPolling() {
-    if (statusPollingTimer) clearInterval(statusPollingTimer);
-    statusPollingTimer = setInterval(() => {
+    setInterval(() => {
         if (!bitebotOrder.orderId) return;
         ordersService.getOrderById(bitebotOrder.orderId)
             .then(response => {
@@ -364,7 +394,7 @@ function startStatusPolling() {
                     const data = getOrderStatusTemplateData();
                     const main = document.getElementById('main');
                     if (main && main.querySelector('.order-status-screen')) {
-                        templateBuilder.build('order-status-screen', data, 'main');
+                        templateBuilder.build('order-status-screen', data, 'main', startStatusLogoUpdater);
                     }
                 }
             })
@@ -372,8 +402,14 @@ function startStatusPolling() {
     }, STATUS_UPDATE_INTERVAL_MS);
 }
 
-// Expose flow handlers for inline onclick (e.g. payment and review screens)
 if (typeof window !== 'undefined') {
+    window.goToLoginScreen = goToLoginScreen;
+    window.loginAndGoToRestaurant = loginAndGoToRestaurant;
+    window.addToOrder = addToOrder;
+    window.setOrderQuantity = setOrderQuantity;
+    window.goToRestaurantScreen = goToRestaurantScreen;
+    window.goToOrderScreen = goToOrderScreen;
+    window.goToPaymentScreen = goToPaymentScreen;
     window.confirmPaymentAndGoToReview = confirmPaymentAndGoToReview;
     window.placeOrderAndGoToStatus = placeOrderAndGoToStatus;
 }

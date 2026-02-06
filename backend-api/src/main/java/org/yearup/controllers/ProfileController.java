@@ -67,6 +67,7 @@ public class ProfileController {
         if (profile.getBillingState() != null) existing.setBillingState(profile.getBillingState());
         if (profile.getBillingZip() != null) existing.setBillingZip(profile.getBillingZip());
         if (profile.getBillingCountry() != null) existing.setBillingCountry(profile.getBillingCountry());
+        if (profile.getDeliveryCountry() != null) existing.setDeliveryCountry(profile.getDeliveryCountry());
         profileDao.update(existing);
         return existing;
     }

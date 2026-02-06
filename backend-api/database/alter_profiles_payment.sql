@@ -10,3 +10,4 @@ ALTER TABLE profiles ADD COLUMN billing_city VARCHAR(50);
 ALTER TABLE profiles ADD COLUMN billing_state VARCHAR(50);
 ALTER TABLE profiles ADD COLUMN billing_zip VARCHAR(20);
 ALTER TABLE profiles ADD COLUMN billing_country VARCHAR(50);
+ALTER TABLE profiles ADD COLUMN delivery_country VARCHAR(50);

@@ -47,8 +47,8 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
     @Override
     public Profile getByUserId(int userId) {
         String sqlFull = "SELECT user_id, first_name, last_name, phone, email, address, city, state, zip, " +
-                " name_on_card, card_number_last4, exp_month, exp_year, billing_address, billing_city, billing_state, billing_zip, billing_country " +
-                " FROM profiles WHERE user_id = ?";
+                " name_on_card, card_number_last4, exp_month, exp_year, billing_address, billing_city, billing_state, billing_zip, billing_country, " +
+                " delivery_country FROM profiles WHERE user_id = ?";
         String sqlBase = "SELECT user_id, first_name, last_name, phone, email, address, city, state, zip FROM profiles WHERE user_id = ?";
         try (Connection conn = getConnection()) {
             try {
@@ -75,7 +75,7 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
     @Override
     public void update(Profile profile) {
         String sql = "UPDATE profiles SET first_name=?, last_name=?, phone=?, email=?, address=?, city=?, state=?, zip=?, " +
-                " name_on_card=?, card_number_last4=?, exp_month=?, exp_year=?, billing_address=?, billing_city=?, billing_state=?, billing_zip=?, billing_country=? " +
+                " name_on_card=?, card_number_last4=?, exp_month=?, exp_year=?, billing_address=?, billing_city=?, billing_state=?, billing_zip=?, billing_country=?, delivery_country=? " +
                 " WHERE user_id=?";
         try (Connection conn = getConnection()) {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -96,7 +96,8 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
             ps.setString(15, profile.getBillingState());
             ps.setString(16, profile.getBillingZip());
             ps.setString(17, profile.getBillingCountry());
-            ps.setInt(18, profile.getUserId());
+            ps.setString(18, profile.getDeliveryCountry());
+            ps.setInt(19, profile.getUserId());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -115,6 +116,7 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
             p.setBillingState(rs.getString("billing_state"));
             p.setBillingZip(rs.getString("billing_zip"));
             p.setBillingCountry(rs.getString("billing_country"));
+            p.setDeliveryCountry(rs.getString("delivery_country"));
         } catch (SQLException ignored) { }
         return p;
     }

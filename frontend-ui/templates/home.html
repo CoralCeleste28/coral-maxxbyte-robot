@@ -1,8 +1,19 @@
-<section class="bitebot-home">
-    <h1 class="bitebot-brand">BiteBot</h1>
-    <div class="bitebot-hero-images">
-        <img class="bitebot-hero-img" src="{{image1}}" alt="BiteBot">
-        <img class="bitebot-hero-img" src="{{image2}}" alt="BiteBot">
+<section class="bitebot-home-new">
+  <div class="hero-section">
+    <div class="hero-bg{{#heroBackgroundImage}} hero-bg-custom{{/heroBackgroundImage}}"{{#heroBackgroundImage}} style="background-image: url('{{heroBackgroundImage}}');"{{/heroBackgroundImage}}></div>
+    <div class="hero-content">
+      <div class="hero-slogan-wrap">
+        <h2 class="hero-slogan-line">BITES</h2>
+        <h2 class="hero-slogan-line">DELIVERED</h2>
+        <h2 class="hero-slogan-line">BY BOTS.</h2>
+      </div>
+      <div class="hero-food-wrap">
+        <img class="hero-food-img" src="{{heroFoodImage}}" alt="BiteBot food">
+      </div>
     </div>
-    <button type="button" class="btn btn-primary btn-order-now" onclick="goToLoginScreen()">ORDER NOW</button>
+  </div>
+  <div class="cta-bar">
+    <button type="button" class="cta-start-order" onclick="goToLoginScreen()">START YOUR ORDER</button>
+    <button type="button" class="cta-delivery" onclick="goToLoginScreen()">DELIVERY</button>
+  </div>
 </section>

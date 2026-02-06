@@ -33,7 +33,10 @@ function loadHome()
     document.body.classList.remove('restaurant-view');
     const data = {
         image1: config.assets.homeImage1,
-        image2: config.assets.homeImage2
+        image2: config.assets.homeImage2,
+        logo: config.assets.logo,
+        heroFoodImage: config.assets.heroFoodImage || config.assets.butterChickenImage,
+        heroBackgroundImage: config.assets.homeHeroBackground || ''
     };
     templateBuilder.build('home', data, 'main');
 }
@@ -54,25 +57,29 @@ function editProfile()
 
 function saveProfile()
 {
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
-    const phone = document.getElementById("phone").value;
-    const email = document.getElementById("email").value;
-    const address = document.getElementById("address").value;
-    const city = document.getElementById("city").value;
-    const state = document.getElementById("state").value;
-    const zip = document.getElementById("zip").value;
+    const cardNumberRaw = document.getElementById("cardNumber")?.value?.trim() || '';
+    const cardNumberLast4 = cardNumberRaw.length >= 4 ? cardNumberRaw.slice(-4) : (cardNumberRaw.replace(/\D/g, '').slice(-4) || null);
 
     const profile = {
-        firstName,
-        lastName,
-        phone,
-        email,
-        address,
-        city,
-        state,
-        zip
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value,
+        nameOnCard: document.getElementById("nameOnCard").value,
+        expMonth: document.getElementById("expMonth").value,
+        expYear: document.getElementById("expYear").value,
+        billingAddress: document.getElementById("billingAddress").value,
+        billingCity: document.getElementById("billingCity").value,
+        billingState: document.getElementById("billingState").value,
+        billingZip: document.getElementById("billingZip").value,
+        billingCountry: document.getElementById("billingCountry").value,
+        address: document.getElementById("address").value,
+        city: document.getElementById("city").value,
+        state: document.getElementById("state").value,
+        zip: document.getElementById("zip").value,
+        deliveryCountry: document.getElementById("deliveryCountry").value
     };
+    if (cardNumberLast4) profile.cardNumberLast4 = cardNumberLast4;
 
     profileService.updateProfile(profile);
 }

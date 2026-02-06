@@ -20,6 +20,7 @@ public class Profile
     private String billingState;
     private String billingZip;
     private String billingCountry;
+    private String deliveryCountry;
 
     public Profile()
     {
@@ -146,4 +147,6 @@ public class Profile
     public void setBillingZip(String billingZip) { this.billingZip = billingZip; }
     public String getBillingCountry() { return billingCountry; }
     public void setBillingCountry(String billingCountry) { this.billingCountry = billingCountry; }
+    public String getDeliveryCountry() { return deliveryCountry; }
+    public void setDeliveryCountry(String deliveryCountry) { this.deliveryCountry = deliveryCountry; }
 }
