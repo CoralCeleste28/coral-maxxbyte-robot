@@ -346,7 +346,7 @@ function getOrderStatusTemplateData() {
         statusPlacedImage: config.assets.statusPlacedImage,
         statusEnRouteImage: config.assets.statusEnRouteImage,
         statusArrivedImage: config.assets.statusArrivedImage,
-        statusLogo: config.assets.logo
+        statusLogo: config.assets.statusLogo || config.assets.logo
     };
 }
 

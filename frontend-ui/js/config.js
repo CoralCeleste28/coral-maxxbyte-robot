@@ -20,6 +20,7 @@ const config = {
         butterChickenImage: 'images/food/Butter Chicken.jpg',
         statusPlacedImage: 'images/icons/checkmark-icon.png',
         statusEnRouteImage: 'images/icons/checkmark-icon.png',
-        statusArrivedImage: 'images/icons/checkmark-icon.png'
+        statusArrivedImage: 'images/icons/checkmark-icon.png',
+        statusLogo: 'images/logo/status-bar-logo.png'
     }
 }

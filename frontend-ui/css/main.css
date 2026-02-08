@@ -933,8 +933,9 @@ body.restaurant-view header .header-brand {
 /* Screen 7: Order status */
 .order-status-screen {
     text-align: center;
+    background: #c62828;
 }
-.order-status-screen h2 { margin-bottom: 1rem; }
+.order-status-screen h2 { margin-bottom: 1rem; color: #fff; }
 
 /* Single unified status bar: bar on top, checkmarks below */
 .status-unified-bar {
@@ -951,9 +952,9 @@ body.restaurant-view header .header-brand {
     right: 0;
     top: 8px;
     height: 8px;
-    background: linear-gradient(to right, #e0e0e0 0%, #eee 50%, #e0e0e0 100%);
+    background: #000;
     border-radius: 4px;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
 }
 .status-logo-runner {
     position: absolute;
@@ -1017,6 +1018,6 @@ body.restaurant-view header .header-brand {
     white-space: nowrap;
 }
 .status-message {
-    color: #666;
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.9rem;
 }
